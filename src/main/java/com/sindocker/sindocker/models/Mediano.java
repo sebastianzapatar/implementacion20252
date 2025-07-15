@@ -2,6 +2,7 @@ package com.sindocker.sindocker.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,13 @@ public class Mediano {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(unique=true)
     private String name;
 
     private double height;
 
+
+
 }
+
+

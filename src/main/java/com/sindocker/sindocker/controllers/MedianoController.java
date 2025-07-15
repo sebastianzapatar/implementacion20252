@@ -1,6 +1,11 @@
 package com.sindocker.sindocker.controllers;
 
+import com.sindocker.sindocker.dto.MedianoDTO;
 import com.sindocker.sindocker.models.Mediano;
+import com.sindocker.sindocker.services.IServiceMediano;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,23 +15,27 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/medianos")
 public class MedianoController {
-    private List<String> medianos=new ArrayList<>();
+    @Autowired
+    private IServiceMediano mediano;
+
+
     @GetMapping("/")
-    public List<String> getMedianos(){
-        return this.medianos;
+    public List<Mediano> getMedianos(){
+        return mediano.getMedianos();
+
     }
     @PostMapping("/")
-    public void addMediano(@RequestBody String mediano){
-        this.medianos.add(mediano);
+    public ResponseEntity<?> addMediano(@RequestBody @Valid  MedianoDTO medianoDTO){
+        mediano.addMediano(medianoDTO);
+        return ResponseEntity.ok().build();
     }
     /// tarea
     //Usar streams
     //Filtrar los medianos que empiezan con a
-    @GetMapping("/filtrado/{letra}")
-    public List<String> filtrado(@PathVariable String letra){
-        return this.medianos.stream().filter(mediano ->
-                mediano.contains(letra)).
-                collect(Collectors.toList());
+    @GetMapping("/filtrado/{nombre}")
+    public Mediano filtrado(@PathVariable String nombre){
+        ///
+        return mediano.getByName(nombre).orElse(null);
     }
     //mostrar el mediano con el nombre más largo
 
