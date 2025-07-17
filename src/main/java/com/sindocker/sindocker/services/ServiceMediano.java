@@ -15,9 +15,17 @@ public class ServiceMediano implements IServiceMediano {
     @Autowired
     private IMedianoDao medianoDao;
     @Override
-    public List<Mediano> getMedianos() {
+    public List<MedianoDTO> getMedianos(){
         //SELECT * FROM medianos;
-        return medianoDao.findAll();
+        return medianoDao.findAll().stream().map(
+                mediano -> {
+                    return new MedianoDTO(
+                            mediano.getName(),
+                            mediano.getHeight(),
+                            mediano.getEmail()
+                    );
+                }
+        ).toList();
     }
 
     @Override
@@ -25,6 +33,7 @@ public class ServiceMediano implements IServiceMediano {
         Mediano mediano = new Mediano();
         mediano.setHeight(m.altura());
         mediano.setName(m.nombre());
+        mediano.setEmail(m.email());
         Mediano busqueda=
                 medianoDao.findMedianoByName(mediano.getName())
                         .orElse(null);

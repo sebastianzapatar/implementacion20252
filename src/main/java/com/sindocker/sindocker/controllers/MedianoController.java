@@ -20,12 +20,14 @@ public class MedianoController {
 
 
     @GetMapping("/")
-    public List<Mediano> getMedianos(){
+    public List<MedianoDTO> getMedianos(){
         return mediano.getMedianos();
 
     }
     @PostMapping("/")
-    public ResponseEntity<?> addMediano(@RequestBody @Valid  MedianoDTO medianoDTO){
+    public ResponseEntity<?> addMediano(@RequestBody @Valid
+                                            MedianoDTO medianoDTO){
+        System.out.println(medianoDTO);
         mediano.addMediano(medianoDTO);
         return ResponseEntity.ok().build();
     }
