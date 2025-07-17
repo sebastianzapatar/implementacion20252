@@ -30,6 +30,7 @@ public class Mediano {
     private String email;
     @OneToMany(mappedBy = "mediano",cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonIgnore
     private Set<Photo> photos;
 
 }

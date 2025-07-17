@@ -2,8 +2,10 @@ package com.sindocker.sindocker.services;
 
 import com.sindocker.sindocker.Excepciones.NameException;
 import com.sindocker.sindocker.dao.IMedianoDao;
+import com.sindocker.sindocker.dao.IPhotosDao;
 import com.sindocker.sindocker.dto.MedianoDTO;
 import com.sindocker.sindocker.models.Mediano;
+import com.sindocker.sindocker.models.Photo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class ServiceMediano implements IServiceMediano {
     @Autowired
     private IMedianoDao medianoDao;
+    @Autowired
+    private IPhotosDao photosDao;
+
     @Override
     public List<MedianoDTO> getMedianos(){
         //SELECT * FROM medianos;
@@ -58,5 +63,10 @@ public class ServiceMediano implements IServiceMediano {
     @Override
     public Optional<Mediano> getByName(String nombre) {
         return medianoDao.findMedianoByName(nombre);
+    }
+
+    @Override
+    public List<Photo> getPhotosMediano(String id) {
+        return photosDao.findByMedianoId(id);
     }
 }
