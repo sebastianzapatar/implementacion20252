@@ -7,6 +7,9 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.action.internal.OrphanRemovalAction;
+
+import java.util.Set;
 
 @Entity()
 @Table(name="medianos")
@@ -25,6 +28,9 @@ public class Mediano {
     private long height;
 
     private String email;
+    @OneToMany(mappedBy = "mediano",cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Photo> photos;
 
 }
 
