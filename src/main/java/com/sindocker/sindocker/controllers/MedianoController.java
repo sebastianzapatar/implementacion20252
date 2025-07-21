@@ -2,6 +2,7 @@ package com.sindocker.sindocker.controllers;
 
 import com.sindocker.sindocker.dto.MedianoDTO;
 import com.sindocker.sindocker.models.Mediano;
+import com.sindocker.sindocker.models.Photo;
 import com.sindocker.sindocker.services.IServiceMediano;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,10 @@ public class MedianoController {
     public Mediano filtrado(@PathVariable String nombre){
         ///
         return mediano.getByName(nombre).orElse(null);
+    }
+    @GetMapping("/fotos/{idMediano}")
+    public List<Photo> fotos(@PathVariable String idMediano){
+        return this.mediano.getPhotosMediano(idMediano);
     }
     //mostrar el mediano con el nombre más largo
 

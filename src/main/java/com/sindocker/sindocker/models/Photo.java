@@ -2,6 +2,8 @@ package com.sindocker.sindocker.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -9,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="fotos")
+@Data
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +21,7 @@ public class Photo {
     String path;
 
     String description;
-
+    @CreationTimestamp
     private LocalDate created;
 
     @ManyToOne(fetch = FetchType.LAZY)

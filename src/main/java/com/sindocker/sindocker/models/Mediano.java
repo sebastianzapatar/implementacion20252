@@ -19,7 +19,6 @@ import java.util.Set;
 public class Mediano {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @JsonIgnore
     private String id;
 
     @Column(unique=true)
