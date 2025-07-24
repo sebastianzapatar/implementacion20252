@@ -26,8 +26,11 @@ public class ServicePhoto implements IServicePhoto{
 
     @Override
     public void addPhoto(PhotoDTO photo) {
-        Mediano mediano = medianoDao.findById(photo.medianoId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mediano no encontrado"));
+        Mediano mediano = medianoDao.
+                findById(photo.medianoId())
+                .orElseThrow
+                        (() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mediano no encontrado"));
+
         Photo nuevaFoto = new Photo();
         nuevaFoto.setPath(photo.url());
         nuevaFoto.setDescription(photo.descripcion());
