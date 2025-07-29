@@ -28,6 +28,7 @@ FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 
 # Copia el JAR desde la etapa anterior
+COPY .env .env
 COPY --from=build /app/target/*.jar app.jar
 
 # Expone el puerto de la aplicación
