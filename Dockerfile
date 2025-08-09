@@ -1,42 +1,15 @@
-# ========================
-# Etapa 1: Construcción
-# ========================
+# ===== Build =====
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-
-# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
-
-# Copia solo el archivo pom.xml para aprovechar el cache de dependencias
 COPY pom.xml .
-
-# Descarga las dependencias necesarias
 RUN mvn dependency:go-offline
-
-# Copia el resto del código fuente
 COPY src ./src
-
-# Compila el proyecto y genera el JAR, sin ejecutar pruebas
 RUN mvn clean package -DskipTests
 
-
-# ========================
-# Etapa 2: Imagen final
-# ========================
+# ===== Final =====
 FROM eclipse-temurin:21-jdk-alpine
-
-# Establece el directorio de trabajo
 WORKDIR /app
-
-# Copia el JAR desde la etapa anterior
-COPY .env .env
-COPY --from=build /app/target/*.jar app.jar
-
-# Expone el puerto de la aplicación
-EXPOSE 8080
-
-# Comando para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
-
-
-
+ARG JAR_FILE=target/*.jar
+COPY --from=build /app/${JAR_FILE} app.jar
+ENTRYPOINT ["sh","-c","java -Dserver.port=${PORT:-8080} -Dserver.address=0.0.0.0 -jar app.jar"]
 
